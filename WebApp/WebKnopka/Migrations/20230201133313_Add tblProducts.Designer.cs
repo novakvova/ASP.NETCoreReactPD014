@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebKnopka.Data;
@@ -11,9 +12,11 @@ using WebKnopka.Data;
 namespace WebKnopka.Migrations
 {
     [DbContext(typeof(AppEFContext))]
-    partial class AppEFContextModelSnapshot : ModelSnapshot
+    [Migration("20230201133313_Add tblProducts")]
+    partial class AddtblProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -237,21 +240,6 @@ namespace WebKnopka.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("WebKnopka.Data.Entities.FilterEntity", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("FilterValueId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ProductId", "FilterValueId");
-
-                    b.HasIndex("FilterValueId");
-
-                    b.ToTable("tblFilters");
-                });
-
             modelBuilder.Entity("WebKnopka.Data.Entities.FilterNameEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -399,25 +387,6 @@ namespace WebKnopka.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("WebKnopka.Data.Entities.FilterEntity", b =>
-                {
-                    b.HasOne("WebKnopka.Data.Entities.FilterValueEntity", "FilterValue")
-                        .WithMany()
-                        .HasForeignKey("FilterValueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebKnopka.Data.Entities.ProductEntity", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FilterValue");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("WebKnopka.Data.Entities.FilterNameGroupEntity", b =>

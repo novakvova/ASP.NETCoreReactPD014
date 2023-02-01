@@ -18,6 +18,8 @@ namespace WebKnopka.Data
         public DbSet<FilterNameEntity> FilterNames { get; set; }
         public DbSet<FilterValueEntity> FilterValues { get; set; }
         public DbSet<FilterNameGroupEntity> FilterNameGroups { get; set; }
+        public DbSet<ProductEntity> Products { get; set; }
+        public DbSet<FilterEntity> Filters { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -40,6 +42,11 @@ namespace WebKnopka.Data
                 builder.Entity<FilterNameGroupEntity>(fng =>
                 {
                     fng.HasKey(b => new { b.FilterNameId, b.FilterValueId });
+                });
+
+                builder.Entity<FilterEntity>(fng =>
+                {
+                    fng.HasKey(b => new { b.ProductId, b.FilterValueId });
                 });
 
             });
