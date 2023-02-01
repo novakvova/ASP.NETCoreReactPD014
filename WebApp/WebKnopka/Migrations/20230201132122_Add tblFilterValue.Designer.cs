@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebKnopka.Data;
@@ -11,9 +12,11 @@ using WebKnopka.Data;
 namespace WebKnopka.Migrations
 {
     [DbContext(typeof(AppEFContext))]
-    partial class AppEFContextModelSnapshot : ModelSnapshot
+    [Migration("20230201132122_Add tblFilterValue")]
+    partial class AddtblFilterValue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,21 +264,6 @@ namespace WebKnopka.Migrations
                     b.ToTable("tblFilterNames");
                 });
 
-            modelBuilder.Entity("WebKnopka.Data.Entities.FilterNameGroupEntity", b =>
-                {
-                    b.Property<int>("FilterNameId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("FilterValueId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("FilterNameId", "FilterValueId");
-
-                    b.HasIndex("FilterValueId");
-
-                    b.ToTable("tblFilterNameGroups");
-                });
-
             modelBuilder.Entity("WebKnopka.Data.Entities.FilterValueEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -355,25 +343,6 @@ namespace WebKnopka.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WebKnopka.Data.Entities.FilterNameGroupEntity", b =>
-                {
-                    b.HasOne("WebKnopka.Data.Entities.FilterNameEntity", "FilterName")
-                        .WithMany("FilterNameGroups")
-                        .HasForeignKey("FilterNameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebKnopka.Data.Entities.FilterValueEntity", "FilterValue")
-                        .WithMany("FilterNameGroups")
-                        .HasForeignKey("FilterValueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FilterName");
-
-                    b.Navigation("FilterValue");
-                });
-
             modelBuilder.Entity("WebKnopka.Data.Entities.AppRoleEntity", b =>
                 {
                     b.Navigation("UserRoles");
@@ -382,16 +351,6 @@ namespace WebKnopka.Migrations
             modelBuilder.Entity("WebKnopka.Data.Entities.AppUserEntity", b =>
                 {
                     b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("WebKnopka.Data.Entities.FilterNameEntity", b =>
-                {
-                    b.Navigation("FilterNameGroups");
-                });
-
-            modelBuilder.Entity("WebKnopka.Data.Entities.FilterValueEntity", b =>
-                {
-                    b.Navigation("FilterNameGroups");
                 });
 #pragma warning restore 612, 618
         }

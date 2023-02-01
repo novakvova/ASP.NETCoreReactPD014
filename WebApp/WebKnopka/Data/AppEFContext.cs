@@ -15,6 +15,9 @@ namespace WebKnopka.Data
         {
 
         }
+        public DbSet<FilterNameEntity> FilterNames { get; set; }
+        public DbSet<FilterValueEntity> FilterValues { get; set; }
+        public DbSet<FilterNameGroupEntity> FilterNameGroups { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -33,6 +36,12 @@ namespace WebKnopka.Data
                     .WithMany(r => r.UserRoles)
                     .HasForeignKey(ur => ur.UserId)
                     .IsRequired();
+
+                builder.Entity<FilterNameGroupEntity>(fng =>
+                {
+                    fng.HasKey(b => new { b.FilterNameId, b.FilterValueId });
+                });
+
             });
         }
     }
